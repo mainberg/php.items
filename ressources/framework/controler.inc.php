@@ -35,7 +35,6 @@
 				$suchparameter = empty($this->trm)?'':"&asp={$this->asp}&trm={$this->trm}";
 				$suchbedingung = empty($this->trm)?'':" AND {$this->asp} LIKE '%{$this->trm}%'";
 				$this->suchaspekte = implode('',$this->renderSuchaspekte($this->asp));
-				var_dump($suchbedingung);
 			}
 			
 			$filterparameter = implode('', array_map(
@@ -128,7 +127,6 @@
 		}
 		
 		protected function retrieveRecords($bedingungen, $start, $len) {
-			echo "parent = {$this->id}".$bedingungen;
 			return $this->dataSource->retrieveItems("parent = {$this->id}".$bedingungen, $this->start, RECS);
 		}
 		
@@ -146,7 +144,7 @@
 		}
 
 		function breadcrumbs($parentId) {
-			if ($parentId > 0) {
+			if ($parentId > -1) {
 				$parentRecord = $this->dataSource->retrieveItem($parentId);
 				$result = $this->breadcrumbs($parentRecord['parent']);
 				$result[] = $parentRecord;

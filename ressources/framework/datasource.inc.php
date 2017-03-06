@@ -55,7 +55,6 @@
 		protected function createItemListFromQuery($sql) {
 			global $pdo;
 			$results = array();
-			var_dump($sql);
 			foreach ($pdo->query($sql) as $row) {
 				$results[] = $this->itemModel->createFromRow($row);
 			}
