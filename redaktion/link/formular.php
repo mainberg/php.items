@@ -5,9 +5,9 @@
 	require "../../ressources/framework/controler.inc.php";
 	require "../../ressources/link.inc.php";
 	
-	$controler = new NodeControler(LinkModel::getInstance());	
+	$controler = new FormularControler(LinkModel::getInstance());	
 	
-	$record = $controler->doFormularGet($_GET);
+	$controler->doGet($_GET);
 	
 ?>
 <!DOCTYPE html>
@@ -18,30 +18,30 @@
 	</head>
 	<body>
 		<div class="container">
-			<form action="liste.php?id=<?php echo $record['parent'] ?>" method="POST">
+			<form action="liste.php?id=<?php echo $controler->record['parent'] ?>" method="POST">
 				<fieldset>
 					<legend>Daten</legend>
-					<input type="hidden" name="id" value="<?php echo $record['id'] ?>" >
-					<input type="hidden" name="modified" value="<?php echo $record['modified'] ?>" >
-					<input type="hidden" name="modifier" value="<?php echo $record['modifier'] ?>" >
-					<input type="hidden" name="parent" value="<?php echo $record['parent'] ?>" >
-					<input type="hidden" name="pos" value="<?php echo $record['pos'] ?>" >
-					<input type="hidden" name="type" value="<?php echo $record['type'] ?>" >
+					<input type="hidden" name="id" value="<?php echo $controler->record['id'] ?>" >
+					<input type="hidden" name="modified" value="<?php echo $controler->record['modified'] ?>" >
+					<input type="hidden" name="modifier" value="<?php echo $controler->record['modifier'] ?>" >
+					<input type="hidden" name="parent" value="<?php echo $controler->record['parent'] ?>" >
+					<input type="hidden" name="pos" value="<?php echo $controler->record['pos'] ?>" >
+					<input type="hidden" name="type" value="<?php echo $controler->record['type'] ?>" >
 					<div>
 						<label>Titel</label><br>
-						<input name="titel" type="text" value="<?php echo $record['titel'] ?>" >
+						<input name="titel" type="text" value="<?php echo $controler->record['titel'] ?>" >
 					</div>	
 					<div>
 						<label>Beschreibung:</label><br>
-						<textarea name="beschreibung"><?php echo $record['beschreibung'] ?></textarea>
+						<textarea name="beschreibung"><?php echo $controler->record['beschreibung'] ?></textarea>
 					</div>
-					<?php if($record['type'] == 1){ ?>
+					<?php if($controler->record['type'] == 1){ ?>
 						<div>
 							<label>Url</label><br>
-							<input name="url" type="text" value="<?php echo $record['url'] ?>" >
+							<input name="url" type="text" value="<?php echo $controler->record['url'] ?>" >
 						</div>
 					<?php } else { ?>
-						<input type="hidden" name="url" value="<?php echo $record['url'] ?>" >
+						<input type="hidden" name="url" value="<?php echo $controler->record['url'] ?>" >
 					<?php } ?>
 					</div>   
 					
