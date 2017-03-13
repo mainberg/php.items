@@ -1,5 +1,5 @@
 <?php 
-
+		
 	include("datasource.inc.php");
 	
 	define("RECS", 10);
@@ -108,10 +108,15 @@
 		
 	}	
 	
+	
+	
+	
+	
 	class NodeControler extends ItemControler {
 		
 		public $record = array();
 		public $breadcrumbs = array();
+		public $parents = array();
 		private $id;
 		
 		function __construct($nodeModel) {
@@ -123,7 +128,7 @@
 			$this->id = isset($get['id'])?$get['id'] : 1;
 			parent::doGet($get);			
 			$this->record = $this->dataSource->retrieveItem($this->id);	
-			$this->breadcrumbs = $this->breadcrumbs($this->record['parent']);
+			$this->breadcrumbs = $this->retrieveParents($this->record['parent']);
 		}
 		
 		protected function retrieveRecords($bedingungen, $start, $len) {
@@ -143,19 +148,89 @@
 			}
 		}
 
-		function breadcrumbs($parentId) {
+		function retrieveParents($parentId) {
 			if ($parentId > -1) {
 				$parentRecord = $this->dataSource->retrieveItem($parentId);
-				$result = $this->breadcrumbs($parentRecord['parent']);
+				$result = $this->retrieveParents($parentRecord['parent']);
 				$result[] = $parentRecord;
 				return $result;
 			} else {
 				return array();
 			}
-		}		
+		}
+
+
+		
 	}
+	
+	
+	
 
+    class TreeControler extends ItemControler {
+		
+		public $record = array();
+		public $root = array();
+		public $parents = array();
+		private $tree;
+		private $id;
+		
+		function __construct($nodeModel) {
+			$this->itemModel = $nodeModel;
+			$this->dataSource = new NodeDataSource($nodeModel);
+		}
+		
+		function doGet($get) {
+			$this->tree = isset($get['tree'])?$get['tree'] : 0;
+			$this->id = isset($get['id'])?$get['id'] : $this->tree;
+			$this->root = $this->dataSource->retrieveItem($this->tree);
+			$this->record = $this->dataSource->retrieveItem($this->id);	
+			$this->parents = $this->retrieveParents($this->record['parent']);
+		}
+		
+		function retrieveParents($parentId) {
+			if ($parentId > $this->root['parent']) {
+				$parentRecord = $this->dataSource->retrieveItem($parentId);
+				$result = $this->retrieveParents($parentRecord['parent']);
+				$result[] = $parentRecord;
+				return $result;
+			} else {
+				return array();
+			}
+		}
+		
+		private function inParents($id) {
+			foreach ($this->parents as $parent) {
+				if ($parent['id'] == $id) {
+					return true;
+				} 					
+			}
+			return false;
+		}
 
+		function renderTree() {
+			echo $this->root['label'];
+			$this->renderChildren($this->root);
+		}
+		
+		function renderChildren($root) {
+			$children = $this->dataSource->retrieveChildren($root['id']);
+			if (count($children) > 0) {
+				echo '<ul>';
+				foreach ($children as $child) {
+					if ($this->inParents($child['id']) || $this->id == $child['id']) {
+						echo "<li><a href=\"?tree={$this->tree}&id={$child['parent']}\">" . $child['label'] . "</a></li>";
+						$this->renderChildren($child);
+					} else {
+						echo "<li><a href=\"?tree={$this->tree}&id={$child['id']}\">" . $child['label'] . "</a></li>";
+					}
+				}
+				echo '</ul>';
+			}						
+		}			
+	}
+	
+	
+	
 
 
 	class FormularControler {

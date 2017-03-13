@@ -66,7 +66,6 @@
 	
 	
 	
-	
 	class NodeDataSource extends ItemDataSource {
 		
 		function __construct($itemModel) {	
@@ -77,6 +76,23 @@
 			global $pdo;
 			$result = $pdo->query("SELECT max(pos) AS maxpos FROM {$this->itemModel->table} WHERE parent = {$id}")->fetch(PDO::FETCH_ASSOC);		
 			return $result['maxpos'] + 1;
-		}				
+		}	
+		
+		function retrieveChildren($parentId) {
+			return $this->createItemListFromQuery("SELECT * FROM {$this->itemModel->table} WHERE parent = {$parentId}");
+		}
+		
+		function retrieveParent($item) {
+			global $pdo;
+			$sql = "SELECT * FROM {$this->itemModel->table} WHERE id = {$item->parent}";
+			return $this->itemModel->createFromRow($pdo->query($sql)->fetch(PDO::FETCH_ASSOC));
+		}	
+
+		function retrieveParentId($id) {
+			global $pdo;
+			$sql = "SELECT parent FROM {$this->itemModel->table} WHERE id = {$id}";
+			$result = $pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
+			return $result['parent'];
+		}
 	}
 ?>
