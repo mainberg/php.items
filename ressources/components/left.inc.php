@@ -23,7 +23,7 @@
 			</tr>
 			<tr>
 				<td id="zeitschriften" class="nav1"><img src="/img/x.gif" width="1" height="25" /></td>
-				<td><a href="/zeitschriften.html">BODENSEE ZEITSCHRIFTEN</a></td>
+				<td><a href="zeitschriften.php">BODENSEE ZEITSCHRIFTEN</a></td>
 			</tr>
 			<tr>
 				<td id="kataloge" class="nav1"><img src="/img/x.gif" width="1" height="25" /></td>
