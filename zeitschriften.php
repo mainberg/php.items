@@ -1,12 +1,9 @@
 <?php
 
 	require "ressources/components/tags.php";	
-	require "ressources/framework/datasource.inc.php";
-	require "ressources/journal.inc.php";	
+	require "ressources/journal.controler.inc.php";
 	
-	$dataSource = new NodeDataSource(JournalModel::getInstance());
-	
-	$children = $dataSource->retrieveChildren(0);		
+	$controler = new JournalControler();	
 	
 ?>
 <!DOCTYPE html>
@@ -34,7 +31,7 @@
 				<div id="spalte1">			
 				
 					<ul>
-					<?php foreach ($children as $child) { 
+					<?php foreach ($controler->retrieveJournale() as $child) { 
 						echo "<li><a href=\"zeitschrift.php?journal={$child['id']}\">{$child['label']}</a></li>";
 					} ?>
 					</ul>
