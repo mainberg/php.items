@@ -21,6 +21,10 @@
 			$this->parentIds[] = $this->id;
 		}
 		
+		function retrieveJournale() {
+			return $this->dataSource->retrieveChildren(0);
+		}
+		
 		function retrieveParentIds($id) {
 			$parentId = $this->dataSource->retrieveParentId($id);
 			if ($parentId > 0) {
@@ -42,7 +46,7 @@
 						$this->renderChildren($child);
 					} else {
 						if ($child['type'] == 'booklet') {
-							echo "<li><a href=\"http://www.bodenseebibliotheken.de/viewer.html?id=mont.03.03.01&view=single\" target=\"_blank\">{$child['label']}</a></li>";
+							echo "<li><a href=\"{$child['url']}\" target=\"_blank\">{$child['label']}</a></li>";
 						} else {
 							echo "<li><a href=\"?journal={$this->root['id']}&id={$child['id']}\">{$child['label']}</a></li>";
 						}
