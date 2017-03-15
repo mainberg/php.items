@@ -66,7 +66,7 @@
 			} else if (isset($post['delete'])) {
 				$this->dataSource->removeItem($post['id']);								
 			}		
-		}	
+		}
 
 		protected function retrieveRecords($bedingungen, $start, $len) {
 			return $this->dataSource->retrieveItems('1'.$bedingungen, $this->start, RECS);

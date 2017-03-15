@@ -1,7 +1,7 @@
 <?php
 
-	#$pdo = new PDO('mysql:host=rdbms.strato.de;dbname=DB498164','U498164','ho2fma2n');
-	$pdo = new PDO('mysql:host=localhost;dbname=kebweb','kebweb', 'pw_kebweb');	
+	$pdo = new PDO('mysql:host=rdbms.strato.de;dbname=DB2898920','U2898920','ho2fma2n');
+	#$pdo = new PDO('mysql:host=localhost;dbname=kebweb','kebweb', 'pw_kebweb');	
 	$pdo->query("SET NAMES 'utf-8'");	
 
 	class ItemDataSource {
@@ -16,6 +16,10 @@
 			global $pdo;
 			$sql = "SELECT * FROM {$this->itemModel->table} WHERE id = {$id}";
 			return $this->itemModel->createFromRow($pdo->query($sql)->fetch(PDO::FETCH_ASSOC));
+		}
+		
+		function retrieveAllItems($sql) {
+			return $this->createItemListFromQuery($sql);
 		}
 		
 		function retrieveItems($where, $start, $len) {
