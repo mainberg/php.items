@@ -17,7 +17,7 @@
 		<style type="text/css">
 			
 		</style>
-		<title>Bibliotheken der Regio Bodensee: Projekte</title>
+		<title>Bibliotheken der Regio Bodensee: Zeitschriften</title>
 	</head>
 	<body>
 	
@@ -31,9 +31,11 @@
 			
 			<div id="content1">
 			
-				<div id="spalte1">			
+				<div id="spalte1">					
 					
 					<h1><?php echo $controler->root['label']; ?></h1>
+					
+					<div><?php echo $controler->root['portrait'] ?></div>
 					<?php $controler->renderChildren($controler->root) ?>
 				
 				</div>
