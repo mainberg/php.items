@@ -4,7 +4,7 @@
 			<tr id="labels">
 				<td> <a href="index.php">HOME</a> </td> 
 				<td> <a href="news/index.php">NEWS</a> </td>   
-				<td> <a href="tagungen/index.php">TAGUNGEN</a> </td>
+				<td> <a href="tagungen.php">TAGUNGEN</a> </td>
 				<td> <a href="projekte.php">PROJEKTE</a> </td>
 				<td> <a href="charta.php">CHARTA</a> </td>
 				<td> <a href="statuten.php">STATUTEN</a> </td>
